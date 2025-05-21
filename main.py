@@ -1,5 +1,5 @@
 from stats import count_characters, count_words, sort_characters
-from curses.ascii import isalpha
+import sys
 
 def get_book_text(file_path):
     with open(file_path) as f:
@@ -24,9 +24,15 @@ def print_report(book, num_words, sorted_characters):
     print("============= END ===============")
 
 def main():
-    frankenstein_book = "books/frankenstein.txt"
 
-    content = get_book_text(frankenstein_book)
+    if len(sys.argv) < 2:
+        print("Usage: python3 main.py <path_to_book>")
+        return sys.exit(1)
+
+    book_to_analyse = sys.argv[1]
+    # frankenstein_book = "books/frankenstein.txt"
+
+    content = get_book_text(book_to_analyse)
 
     num_words = count_words(content)
     # print(f"{num_words} words found in the document")
@@ -36,7 +42,7 @@ def main():
 
     sorted_characters = sort_characters(num_characters)
 
-    print_report(frankenstein_book, num_words, sorted_characters)
+    print_report(book_to_analyse, num_words, sorted_characters)
 
 if __name__ == "__main__":
     main()
